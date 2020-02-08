@@ -13,6 +13,7 @@ import {
   waitForDomChange,
   waitForElement,
   waitForElementToBeRemoved,
+  wait,
 } from '@testing-library/dom';
 import { RenderComponentOptions, RenderDirectiveOptions, RenderResult } from './models';
 import { createSelectOptions, createType } from './user-events';
@@ -120,6 +121,17 @@ export async function render<SutType, WrapperType = SutType>(
     return result;
   };
 
+  function componentWait(
+    callback: () => void,
+    options?: {
+      timeout?: number;
+      interval?: number;
+    },
+  ): Promise<void> {
+    const interval = setInterval(detectChanges, 10);
+    return wait(callback, options).finally(() => clearInterval(interval));
+  }
+
   function componentWaitForDomChange<Result>(options?: {
     container?: HTMLElement;
     timeout?: number;
@@ -169,6 +181,7 @@ export async function render<SutType, WrapperType = SutType>(
     debug: (element = fixture.nativeElement) => console.log(prettyDOM(element)),
     type: createType(eventsWithDetectChanges),
     selectOptions: createSelectOptions(eventsWithDetectChanges),
+    wait: componentWait,
     waitForDomChange: componentWaitForDomChange,
     waitForElement: componentWaitForElement,
     waitForElementToBeRemoved: componentWaitForElementToBeRemoved,

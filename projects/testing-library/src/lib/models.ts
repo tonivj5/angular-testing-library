@@ -9,6 +9,7 @@ import {
   waitForElement,
   waitForElementToBeRemoved,
   waitForDomChange,
+  wait,
 } from '@testing-library/dom';
 import { UserEvents } from './user-events';
 
@@ -66,6 +67,13 @@ export interface RenderResult<ComponentType, WrapperType = ComponentType>
    * Re-render the same component with different props.
    */
   rerender: (componentProperties: Partial<ComponentType>) => void;
+  /**
+   * @description
+   * When in need to wait for non-deterministic periods of time you can use wait, to wait for your expectations to pass.
+   *
+   * For more info see https://testing-library.com/docs/dom-testing-library/api-async#wait
+   */
+  wait: typeof wait;
   /**
    * @description
    * Wait for the DOM to change.

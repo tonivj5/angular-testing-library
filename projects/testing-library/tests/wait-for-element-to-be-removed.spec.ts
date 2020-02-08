@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { render } from '../src/public_api';
 import { timer } from 'rxjs';
+import { render } from '../src/public_api';
 
 @Component({
   selector: 'fixture',
